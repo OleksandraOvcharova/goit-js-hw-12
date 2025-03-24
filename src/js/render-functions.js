@@ -49,8 +49,22 @@ export function renderImages(images) {
   modals.refresh();
 }
 
+export function renderEmptyFormNotification() {
+  iziToast.error({
+    message: 'Please, fill the search input.',
+    position: 'topRight',
+  });
+}
+
+export function renderAPIErrorNotification(errorMessage) {
+  iziToast.error({
+    message: `Something went wrong. ${errorMessage}`,
+    position: 'topRight',
+  });
+}
+
 export function renderLastPageNotification() {
-  iziToast.message({
+  iziToast.info({
     message: 'We are sorry, but you have reached the end of search results.',
     position: 'topRight',
   });

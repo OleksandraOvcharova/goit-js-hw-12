@@ -15,6 +15,6 @@ export async function getImages(search, page) {
     });
     return responce.data;
   } catch (error) {
-    return [];
+    return { error: error.message };
   }
 }

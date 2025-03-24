@@ -1,6 +1,8 @@
 import { getImages } from './js/pixabay-api';
 import {
   renderImages,
+  renderEmptyFormNotification,
+  renderAPIErrorNotification,
   renderLastPageNotification,
   renderError,
   clearGallery,
@@ -17,16 +19,19 @@ const loadButton = document.querySelector('button.load_button');
 
 async function updateGallery() {
   showLoader();
-  const { hits, totalHits } = await getImages(search, page);
-  const totalPages = Math.ceil(totalHits / 15);
+  const { hits, totalHits, error } = await getImages(search, page);
+
   hideLoader();
-  if (hits.length === 0) {
+  if (!!error) {
+    renderAPIErrorNotification(error);
+  } else if (hits.length === 0) {
     renderError();
   } else {
     renderImages(hits);
     if (page > 1) {
       scrollGallery();
     }
+    const totalPages = Math.ceil(totalHits / 15);
     if (page == totalPages) {
       hideLoadButton();
       renderLastPageNotification();
@@ -42,8 +47,9 @@ form.addEventListener('submit', async event => {
 
   hideLoadButton();
   const data = new FormData(event.target);
-  const searchText = data.get('search-text');
+  const searchText = data.get('search-text').trim();
   if (searchText === '') {
+    renderEmptyFormNotification();
     return;
   }
 

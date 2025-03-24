@@ -6,6 +6,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const modals = new SimpleLightbox('a.gallery-link', { captionsData: 'alt' });
 const gallery = document.querySelector('ul.gallery');
 const loader = document.querySelector('span.loader');
+const loadButton = document.querySelector('button.load_button');
 
 export function renderImages(images) {
   const markup = images
@@ -48,6 +49,13 @@ export function renderImages(images) {
   modals.refresh();
 }
 
+export function renderLastPageNotification() {
+  iziToast.message({
+    message: 'We are sorry, but you have reached the end of search results.',
+    position: 'topRight',
+  });
+}
+
 export function renderError() {
   iziToast.error({
     message:
@@ -55,12 +63,32 @@ export function renderError() {
     position: 'topRight',
   });
 }
+export function clearGallery() {
+  gallery.innerHTML = '';
+}
+
+export function scrollGallery() {
+  const galleryItem = document.querySelector('li.gallery-item');
+  const height = galleryItem.getBoundingClientRect().height;
+  window.scrollBy({
+    top: height * 2,
+    left: 0,
+    behavior: 'smooth',
+  });
+}
 
 export function showLoader() {
-  gallery.innerHTML = '';
   loader.classList.remove('hidden');
 }
 
 export function hideLoader() {
   loader.classList.add('hidden');
+}
+
+export function showLoadButton() {
+  loadButton.classList.remove('hidden');
+}
+
+export function hideLoadButton() {
+  loadButton.classList.add('hidden');
 }

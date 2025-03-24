@@ -1,20 +1,20 @@
 import axios from 'axios';
 
-export function getImages(search) {
-  return axios
-    .get('https://pixabay.com/api/', {
+export async function getImages(search, page) {
+  try {
+    const responce = await axios.get('https://pixabay.com/api/', {
       params: {
         key: '49368815-3bbcd5bcef21230b847f53bd6',
         q: search,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
+        per_page: 15,
+        page: page,
       },
-    })
-    .then(({ data: { hits } }) => {
-      return hits;
-    })
-    .catch(() => {
-      return [];
     });
+    return responce.data;
+  } catch (error) {
+    return [];
+  }
 }

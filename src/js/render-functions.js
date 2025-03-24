@@ -5,7 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const modals = new SimpleLightbox('a.gallery-link', { captionsData: 'alt' });
 const gallery = document.querySelector('ul.gallery');
-const loader = document.querySelector('span.loader');
+const loader = document.querySelector('div.loader');
 const loadButton = document.querySelector('button.load_button');
 
 export function renderImages(images) {
